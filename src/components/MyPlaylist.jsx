@@ -1,7 +1,7 @@
 /** Creando componente MyPlaylist */
 
 import { SpotifyPlayer } from "./SpotifyPlayer";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, userEffect } from "react";
 import { v4 as uuid } from 'uuid';
 
 export function MyPlaylist() {
@@ -11,6 +11,7 @@ export function MyPlaylist() {
     const urlRef = useRef() // Esto es un hook que asociamos a un input
     const favoriteRef = useRef()
     const [mensaje, setMensaje] = useState('');
+    const key = 'localhost';
     /**
      * useState es un hook que permite vigilar el ciclo de vida de un elemento
      */
@@ -21,6 +22,17 @@ export function MyPlaylist() {
         { id: uuid(), url: "1XqzXn8a7Z15Z5tBSouXcH", favorite: false }
     ]);
 
+
+    useEffect(() => {
+        console.log("Una vez");
+        const listado = JSON.parse(localStorage.getItem(key));
+
+        if(listado){
+            setSongList(listado);
+        }
+    }, []);
+
+    
     /**Funcion para agregar canciones */
     function addSong() {
         console.log('Presionando boton agregar')
